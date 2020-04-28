@@ -1,0 +1,57 @@
+<script>
+/**
+ * @param {string} text1
+ * @param {string} text2
+ * @return {number}
+ */
+var map = new Map();
+var string1;
+var string2;
+var longestCommonSubsequence = function(text1, text2) {
+     string1 = text1;
+     string2 = text2;
+     // map = new Map();
+     // return LCS(text1.length, text2.length);
+    
+	const L1 = text1.length;
+    const L2 = text2.length;
+    const map = new Map();
+    map.set('0:0', 0);
+    
+    for (let i=0; i<L1; i++) {
+        for (let j=0; j<L2; j++) {
+            if (text1[i] == text2[j]) {
+				let key = parseInt(i+1)+':'+parseInt(j+1);
+				let val = typeof map.get(i+':'+j) === 'undefined' ? 0 : map.get(i+':'+j);
+                map.set(key, 1 + val);
+            } else {
+				let key = parseInt(i)+':'+parseInt(j+1);
+				let key2 = parseInt(i+1)+':'+parseInt(j);
+				let key3 = parseInt(i+1)+':'+parseInt(j+1);
+				let l = typeof map.get(key) === 'undefined' ? 0 : map.get(key);
+				let r = typeof map.get(key2) === 'undefined' ? 0 : map.get(key2);
+                map.set(key3, Math.max(l, r));
+            }
+        }
+    }
+    return map.get(L1+':'+L2);
+};
+
+var LCS = function (len1, len2) {
+    if (len1 == 0 || len2 == 0) {
+        return 0;
+    }
+    var key = parseInt(len1)+':'+parseInt(len2);
+    if (map.get(key)) {
+        return parseInt(map.get(key));
+    }
+    if (string1[len1-1] == string2[len2-1]) {
+        map.set(key, (1 +  LCS(len1-1, len2-1)));
+        return parseInt(map.get(key));      
+    }
+    map.set(key, Math.max(LCS(len1-1, len2), LCS(len1, len2-1)));
+    return parseInt(map.get(key));
+} 
+
+longestCommonSubsequence('abc', 'def');
+</script>

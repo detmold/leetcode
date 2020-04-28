@@ -1,0 +1,36 @@
+<script>
+/**
+ * @param {character[][]} matrix
+ * @return {number}
+ */
+
+
+var maximalSquare = function(matrix) {
+    let H = matrix.length;
+    let W = H !== 0 ? matrix[0].length : 0;
+    let ans = 0;
+    let map = new Map();
+    
+    if (H == 0 || W == 0) {
+        return 0;
+    }
+    for (let i=0; i<H; i ++) {
+        for (let j=0; j<W; j++) {
+            if (matrix[i][j] == '1') {
+                var key = parseInt(i)+':'+parseInt(j);
+                map.set(key, 1);
+                if (i > 0 && j > 0) {
+                    var keyRow = typeof map.get(parseInt(i-1)+':'+parseInt(j)) === 'undefined' ? 0 : map.get(parseInt(i-1)+':'+parseInt(j));
+                    var keyCol = typeof map.get(parseInt(i)+':'+parseInt(j-1)) === 'undefined' ? 0 : map.get(parseInt(i)+':'+parseInt(j-1));
+                    var keyRowCol = typeof map.get(parseInt(i-1)+':'+parseInt(j-1)) === 'undefined' ? 0 : map.get(parseInt(i-1)+':'+parseInt(j-1)); 
+                    var val = parseInt(map.get(key));
+                    map.set(key, val + Math.min(keyRow, keyCol, keyRowCol) );
+                }
+                ans = Math.max(ans, map.get(key));
+            }
+        }
+    }
+    return ans*ans;
+};
+console.log(maximalSquare([["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]]));
+</script>
