@@ -1,0 +1,35 @@
+<script>
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+ 
+
+var isHappy = function(n) {
+	var sum2 = n;
+	var valid = true;
+	var rest = new Map();
+	while(sum2 !== 1) {
+		sum2 = computeSquare(sum2);
+		if (rest.has(sum2)) {
+			valid = false;
+			break;
+		}
+		rest.set(sum2, true);
+	}
+	return valid;
+};
+
+var computeSquare = function(n) {
+	var sum = 0;
+	let mod;
+	while(n) {
+        mod = n%10;
+        sum += mod*mod;
+        n = Math.floor(n/10);
+    }
+	return sum;
+}
+
+console.log(isHappy(25));
+</script>
