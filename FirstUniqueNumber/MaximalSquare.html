@@ -1,0 +1,69 @@
+<script>
+/**
+ * @param {number[]} nums
+ */
+var FirstUnique = function(nums) {
+    this.nums = nums;
+	this.len = this.nums.length;
+	this.unique = [];
+	for (let i=0; i<this.len; i++) {
+		const idx = this.unique.findIndex(val => val.num === this.nums[i]);
+		if (idx !== -1) {
+			this.unique[idx] = {num: this.nums[i], count: ++this.unique[idx].count};
+		} else {
+			this.unique.push({num: this.nums[i], count: 1});
+		}
+	}
+	this.unique = this.unique.filter(val => val.count === 1);
+};
+
+/**
+ * @return {number}
+ */
+FirstUnique.prototype.showFirstUnique = function() {
+	if (this.unique.length == 0 || this.len == 0) {
+		return -1;
+	}
+	return this.unique[0].num;
+};
+
+/** 
+ * @param {number} value
+ * @return {void}
+ */
+FirstUnique.prototype.add = function(value) {
+	const idx = this.unique.findIndex(val => val.num === value);
+	if (idx !== -1) {
+		this.unique.splice(idx, 1);
+	} else {
+		const idxNum = this.nums.findIndex(val => val === value);
+		if (idxNum === -1) {
+			this.unique.push({num: value, count: 1});
+		}
+	}
+	this.nums.push(value);
+};
+
+/** 
+ * Your FirstUnique object will be instantiated and called as such:
+ * var obj = new FirstUnique(nums)
+ * var param_1 = obj.showFirstUnique()
+ * obj.add(value)
+ */
+ 
+ 
+var firstUnique = new FirstUnique([7,7,7,7,7,7])
+
+
+console.log(firstUnique.showFirstUnique()); // return -1
+firstUnique.add(7);            // the queue is now [7,7,7,7,7,7,7]
+firstUnique.add(3);            // the queue is now [7,7,7,7,7,7,7,3]
+firstUnique.add(3);            // the queue is now [7,7,7,7,7,7,7,3,3]
+firstUnique.add(7);            // the queue is now [7,7,7,7,7,7,7,3,3,7]
+firstUnique.add(17);           // the queue is now [7,7,7,7,7,7,7,3,3,7,17]
+console.log(firstUnique.showFirstUnique()); // return 17
+
+
+
+
+</script>

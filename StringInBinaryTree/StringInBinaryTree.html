@@ -1,0 +1,56 @@
+<script>
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+ 
+function TreeNode(val, left, right) {
+    this.val = (val===undefined ? 0 : val)
+	this.left = (left===undefined ? null : left)
+    this.right = (right===undefined ? null : right)
+}
+ 
+var isValidSequence = function(root, arr) {
+    return isValid(root, arr, 0);
+};
+
+var isValid = function(root, arr, idx) {
+    if (root === null) {
+        return false;
+    }
+    if (idx >= arr.length || root.val !== arr[idx]) {
+        return false;
+    } 
+    if (root.left === null && root.right === null) {
+        return idx === arr.length -1;
+    }
+    return isValid(root.left, arr, idx+1) || isValid(root.right, arr, idx+1);
+}
+
+const treeNode9 = new TreeNode(0, null, null);
+
+const treeNode6 = new TreeNode(1, null, null);
+const treeNode7 = new TreeNode(0, null, null);
+const treeNode8 = new TreeNode(0, null, null);
+
+const treeNode4 = new TreeNode(0, null, treeNode6);
+const treeNode5 = new TreeNode(1, treeNode7, treeNode8);
+
+const treeNode2 = new TreeNode(1, treeNode4, treeNode5);
+const treeNode3 = new TreeNode(0, treeNode9, null);
+
+const treeNode1 = new TreeNode(0, treeNode2, treeNode3);
+
+
+console.log(isValidSequence(treeNode1, [0,1,0,1]));
+
+</script>

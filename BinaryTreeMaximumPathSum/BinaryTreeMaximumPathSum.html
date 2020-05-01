@@ -1,0 +1,50 @@
+<script>
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+ 
+function TreeNode(val, left, right) {
+    this.val = (val===undefined ? 0 : val)
+	this.left = (left===undefined ? null : left)
+    this.right = (right===undefined ? null : right)
+}
+ 
+var answer = 0;
+
+var dfs = function(root) {
+    if (root == null) {
+        return 0;
+    }
+    var x = dfs(root.left);
+    var y = dfs(root.right);
+    answer = Math.max(answer, x + y + root.val);
+    return Math.max(0, root.val + Math.max(x, y));
+}
+var maxPathSum = function(root) {
+    answer = Number.MIN_SAFE_INTEGER;
+    dfs(root);
+    return answer;
+};
+
+
+const treeNode1 = new TreeNode(7, null, null);
+const treeNode2 = new TreeNode(15, null, null);
+const treeNode3 = new TreeNode(20, treeNode2, treeNode1);
+const treeNode4 = new TreeNode(53, null, null);
+const treeNode5 = new TreeNode(-10, treeNode4, treeNode3);
+
+
+
+
+console.log(maxPathSum(treeNode5));
+
+</script>
