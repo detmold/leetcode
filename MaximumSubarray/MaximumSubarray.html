@@ -1,0 +1,19 @@
+<script>
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSubArray = function(nums) {
+    let globalMax = Number.MIN_SAFE_INTEGER;
+    let localMax = 0;
+    for (let i=0; i<nums.length; i++) {
+        localMax = Math.max(nums[i], nums[i]+localMax);
+        if (localMax > globalMax) {
+            globalMax = localMax;
+        }
+    }
+    return globalMax;
+};
+
+console.log(maxSubArray([-1]));
+</script>
